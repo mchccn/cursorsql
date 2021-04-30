@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
 import "colors";
-import pkg from "../../package.json";
 
-console.log(`cursors query language (v${pkg.version})`.cyan);
+console.log(`cursors query language (v${process.env.npm_package_version})`.cyan);
 
 process.stdout.write("> ".blue);
 
