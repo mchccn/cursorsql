@@ -1,4 +1,4 @@
-!(CQL Banner)[./banner.png]
+![CQL Banner](./banner.png)
 
 **CQL is a simple and easy to learn query language to interact with CursorsDB, a minimal database.**
 
