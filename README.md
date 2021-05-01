@@ -14,6 +14,8 @@ Unlike the past [slow.db](https://www.npmjs.com/package/@aeroware/slow.db) and [
 
 If something's wrong or doesn't work how you feel, you can open an [issue](https://github.com/cursorsdottsx/cql/issues).
 
+**Documentation is available [here](https://cursorsdottsx.github.io/cql).**
+
 # Consumption and usage
 
 CursorsDB and CQL are available in one package named `cursorsql`, so you can install them with either `npm` or `yarn`, or any other package manager.
@@ -60,8 +62,6 @@ const CQLClient = require("cursorsql");
   // Use `client` to execute queries
 })();
 ```
-
-Documentation is available [here](https://cursorsdottsx.github.io/cql) as well.
 
 # Specifications
 
