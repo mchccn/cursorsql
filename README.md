@@ -163,3 +163,40 @@ delete <NAME | STAR from NAME [where DATA_CLAUSE]>;
 ```
 
 ## CursorsDB
+
+### Introduction
+
+Unlike SQL, CursorsDB does not store SQL statements in `.cql` files. CQL is only used for CRUD and never appears inside CursorsDB. 
+CursorsDB is simply a way to store data efficiently and in a way that is fast and understandable to beginners.
+
+CursorsDB can be even thought of as a file format.
+
+While CursorsDB is a database, it is a simple and limited one at that. It is recommended to only use CursorsDB for small projects, or for a starting point before using SQL databases.
+
+### Format
+
+Upon installation and configuration, CursorsDB will create a few configuration and metadata files to store information about current active databases and a log.
+
+Configuration files and logs will be in a format called CursorsML, of course.
+
+The actual format used by CursorsDB to store raw data is very simple to follow:
+
+```
+SCHEMA
+ROW
+ROW
+```
+
+The first line will be the schema, and all subsequent lines will be rows in the database. The schema contains the data to validate each row while the rows are the actual data being stored.
+
+To read more about file formats CursorsDB uses, please visit the [documentation](https://cursorsdottsx.github.io/cql).
+
+### Extensions
+
+CursorsDB is extensible through plugins, and is configurable through said plugins.
+
+Plugins have access to how the underlying database is storing and validating data, and even how the database retrieves data.
+
+That means you can create a plugin to implement a [RAID level](https://en.wikipedia.org/wiki/Standard_RAID_levels) or to add lock files, or to create new types.
+
+If you've created a plugin to do something cool, please open a pull request and add it here!
