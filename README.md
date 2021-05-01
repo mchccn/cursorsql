@@ -4,6 +4,57 @@
 
 ---
 
+# Introduction
+
+CursorsDB is a small database that is easy to learn and use. It is intended for use by people who are newcomers to database technology and SQL.
+
+By design, CursorsDB and CQL are minimal and simple, and limited. Even though there are some conveniences CQL offers, CursorsDB and CQL are just a stepping stone to database giants like MySQL, SQLite, and PostgresQL,
+
+# Consumption and usage
+
+CursorsDB and CQL are available in one package named `cursorsql`, so you can install them with either `npm` or `yarn`, or any other package manager.
+
+```
+$ npm install cursorsql
+```
+
+```
+$ yarn add cursorsql
+```
+
+The package also comes with a CLI you can use by installing the package globally and executing `cql` or using `npx cql`.
+
+Types for TypeScript are included as the project is in TypeScript.
+
+There is some configuration and setup required before you use CQL and the database driver, though.
+
+- First you'll need to use `cql config` to set up CursorsDB.
+- Next, use `cql` to use the CLI.
+- Create a new database with the CLI.
+- Use the database driver and connect to the database.
+
+Example usage:
+
+```js
+const CQLClient = require("cursorsql");
+
+(async () => {
+  const client = new CQLClient("cql connection string");
+  
+  await new Promise((resolve, reject) => {
+    client.on("ready", () => {
+      console.log("Connected to CursorsDB!");
+      
+      return resolve();
+    });
+  });
+
+  // Use `client` to execute queries
+})();
+```
+
+Documentation is available [here](https://cursorsdottsx.github.io/cql) as well.
+
 # Specifications
 
 ## CQL
