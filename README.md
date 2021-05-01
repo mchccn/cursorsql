@@ -2,9 +2,13 @@
 
 **CQL is a simple and easy to learn query language to interact with CursorsDB, a minimal database.**
 
-## Specifications
+# Specifications
 
-CQL has 6 different kinds of statements and supports CRUD. They are as follows:
+## CQL
+
+### Introduction
+
+CQL has 6 different kinds of statements and only supports basic CRUD. They are as follows:
 
 - `select` Reading from the database
 - `create` Creating a new table
@@ -23,6 +27,8 @@ In CQL, there ar 8 types of tokens, and they are:
 - `STAR` represents everything
 - `SEMICOLON` ends a statement
 - `CONSTRAINT` query constraints or table column constraints
+
+### Types
 
 CQL supports many primitive types and arrays along with nullables.
 
@@ -50,3 +56,7 @@ Types can be suffixed with both `?` and `[]`.
 - `type[]` (as array)
 - `type[]?` (as nullable array)
 - `type?[]?` (as nullable array of nullables)
+
+### Syntax
+
+## CursorsDB
