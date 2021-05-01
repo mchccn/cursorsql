@@ -1,4 +1,4 @@
-![CQL Banner](./banner.png)
+[![CQL Banner](./banner.png)](https://cursorsdottsx.github.io/cql)
 
 <p align="center"><strong>CQL is a simple and easy to learn query language to interact with CursorsDB, a minimal database.</strong></p>
 
@@ -8,15 +8,23 @@
 
 CursorsDB is a small database that is easy to learn and use. It is intended for use by people who are newcomers to database technology and SQL.
 
-By design, CursorsDB and CQL are minimal and simple, and limited. Even though there are some conveniences CQL offers, CursorsDB and CQL are just a stepping stone to database giants like MySQL, SQLite, and PostgresQL,
+By design, CursorsDB and CQL are minimal and simple, and limited. Even though there are some conveniences CQL offers, CursorsDB and CQL are just a stepping stone to true SQL databases like [MySQL](https://www.mysql.com/), [SQLite](https://www.sqlite.org/index.html), and [PostgresQL](https://www.postgresql.org/),
+
+Unlike the past [slow.db](https://www.npmjs.com/package/@aeroware/slow.db) and [css.db](https://www.npmjs.com/package/@aeroware/css.db), this project is an actual useable and feasible database that is fast and complete for beginners to database technology.
+
+If something's wrong or doesn't work how you feel, you can open an [issue](https://github.com/cursorsdottsx/cql/issues).
 
 # Consumption and usage
 
 CursorsDB and CQL are available in one package named `cursorsql`, so you can install them with either `npm` or `yarn`, or any other package manager.
 
+NPM:
+
 ```
 $ npm install cursorsql
 ```
+
+Yarn:
 
 ```
 $ yarn add cursorsql
