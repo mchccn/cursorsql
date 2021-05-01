@@ -1,6 +1,8 @@
 ![CQL Banner](./banner.png)
 
-<p align="center"><strong>CQL is a simple and easy to learn query language to interact with CursorsDB, a minimal database.</strong></p>
+<h3 align="center"><strong>CQL is a simple and easy to learn query language to interact with CursorsDB, a minimal database.</strong></h3>
+
+---
 
 # Specifications
 
