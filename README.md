@@ -200,3 +200,12 @@ Plugins have access to how the underlying database is storing and validating dat
 That means you can create a plugin to implement a [RAID level](https://en.wikipedia.org/wiki/Standard_RAID_levels) or to add lock files, or to create new types.
 
 If you've created a plugin to do something cool, please open a pull request and add it here!
+
+## CursorsML
+
+CursorsML is a really simple markup language with little syntax that CursorsDB uses to store metadata.
+
+In the future, more syntax and semantics will be added to provide more efficient methods of storing data.
+
+The [documentation](https://cursorsdottsx.github.io/cql) has more information on CursorsML.
+
