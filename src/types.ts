@@ -6,7 +6,9 @@ export namespace CQLServer {
 }
 
 export namespace CQLParser {
-    export type TokenType = "NAME" | "CLAUSE" | "KEYWORD" | "LITERAL" | "STAR" | "SEMICOLON" | "TYPE" | "CONSTRAINT";
+    export type TokenType = "NAME" | "CLAUSE" | "KEYWORD" | "LITERAL" | "STAR" | "SEMICOLON" | "TYPE" | "CONSTRAINT" | `${ClauseType}_CLAUSE`;
+
+    export type ClauseType = "LIST" | "PROP" | "DATA" | "META";
 
     export type Tokenized = { type: TokenType; token: string | string[] }[];
 

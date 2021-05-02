@@ -7,13 +7,9 @@
             "sources": [
                 "src/core/main.cpp",
             ],
-            "include_dirs": [
-                "<!@(node -p \"require('node-addon-api').include\")"
-            ],
+            "include_dirs": [],
             "libraries": [],
-            "dependencies": [
-                "<!(node -p \"require('node-addon-api').gyp\")"
-            ],
+            "dependencies": [],
             "defines": [ 'NAPI_DISABLE_CPP_EXCEPTIONS' ]
         }
     ]

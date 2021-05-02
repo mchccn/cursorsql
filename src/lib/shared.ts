@@ -60,7 +60,7 @@ export const SyntaxTree: Record<typeof KEYWORDS[number], CQLParser.SyntaxDescrip
     select: [
         {
             name: "columns",
-            types: ["STAR", "CLAUSE"],
+            types: ["STAR", "LIST_CLAUSE"],
         },
         {
             name: "from",
@@ -98,7 +98,7 @@ export const SyntaxTree: Record<typeof KEYWORDS[number], CQLParser.SyntaxDescrip
         },
         {
             name: "data",
-            types: ["CLAUSE"],
+            types: ["META_CLAUSE"],
         },
     ],
     update: [
@@ -108,11 +108,11 @@ export const SyntaxTree: Record<typeof KEYWORDS[number], CQLParser.SyntaxDescrip
         },
         {
             name: "where",
-            types: ["CLAUSE"],
+            types: ["STAR", "PROP_CLAUSE"],
         },
         {
             name: "data",
-            types: ["CLAUSE"],
+            types: ["DATA_CLAUSE"],
         },
     ],
     insert: [
@@ -122,7 +122,7 @@ export const SyntaxTree: Record<typeof KEYWORDS[number], CQLParser.SyntaxDescrip
         },
         {
             name: "data",
-            types: ["CLAUSE"],
+            types: ["DATA_CLAUSE"],
         },
     ],
     delete: [
@@ -160,11 +160,11 @@ export const SyntaxTree: Record<typeof KEYWORDS[number], CQLParser.SyntaxDescrip
         },
         {
             name: "where",
-            types: ["CLAUSE"],
+            types: ["PROP_CLAUSE"],
         },
         {
             name: "data",
-            types: ["CLAUSE"],
+            types: ["DATA_CLAUSE"],
         },
     ],
     from: [
@@ -176,7 +176,7 @@ export const SyntaxTree: Record<typeof KEYWORDS[number], CQLParser.SyntaxDescrip
     where: [
         {
             name: "clause",
-            types: ["CLAUSE"],
+            types: ["PROP_CLAUSE"],
         },
     ],
 };
