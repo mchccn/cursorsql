@@ -11,19 +11,13 @@ namespace core {
     using v8::Value;
 
     using namespace std;
-    using namespace std::filesystem;
+    using namespace std::__fs::filesystem;
     using namespace std::chrono;
 
     void Method(const FunctionCallbackInfo<Value>& args) {
         Isolate* isolate = args.GetIsolate();
 
         args.GetReturnValue().Set(String::NewFromUtf8(isolate, "world").ToLocalChecked());
-    }
-
-    void Test(const FunctionCallbackInfo<Value>& args) {
-        Isolate* isolate = args.GetIsolate();
-
-        
     }
 
     void Initialize(Local<Object> exports) {
