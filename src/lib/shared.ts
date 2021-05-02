@@ -34,6 +34,26 @@ export const TokenTypes = {
         name: "SEMICOLON",
         validator: /^;$/,
     },
+    NULL: {
+        name: "NULL",
+        validator: /^null$/,
+    },
+    BOOLEAN: {
+        type: "BOOLEAN",
+        validator: /^(true|false)$/,
+    },
+    NUMBER: {
+        type: "NUMBER",
+        validator: /^(?:-?\d*(\.\d+)?)$/,
+    },
+    STRING: {
+        name: "STRING",
+        validator: /^(?:"([^"]|(?<=\\)")*")$/,
+    },
+    DATE: {
+        name: "DATE",
+        validator: /^(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))$/,
+    },
 } as const;
 
 export const SyntaxTree: Record<typeof KEYWORDS[number], CQLParser.SyntaxDescriptor[]> = {

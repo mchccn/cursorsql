@@ -9,6 +9,10 @@ export default function tokenize(query: string) {
 
     const parts = query.split(/\s+/);
 
+    const strings = query.match(/(?:(?<!\\)"([^"]|(?<=\\)")*(?<!\\)")/g) ?? [];
+
+    console.log(strings);
+
     parts.forEach((part, i) => {
         const token = trim(part, ";");
 
@@ -24,25 +28,42 @@ export default function tokenize(query: string) {
         else if (token.startsWith("{")) {
             let idx = i + 1;
 
-            const clause = [token];
+            {
+                let toSkip = 0;
 
-            while (parts[idx] && !parts[idx].startsWith("}")) {
-                const current = parts[idx++];
+                const clause = [token];
 
-                if (typeof current !== "string") continue;
+                while (parts[idx] && !parts[idx].startsWith("}")) {
+                    const current = parts[idx++];
 
-                clause.push(trim(current, ";"));
+                    if (toSkip) {
+                        toSkip--;
+                        continue;
+                    }
 
-                if (current.endsWith(";")) clause.push(";");
+                    if (typeof current !== "string") continue;
+
+                    if (current.startsWith('"')) {
+                        const s = strings.shift();
+
+                        if (!s) throw new Error(`Unterminated string literal.`);
+
+                        toSkip = s.split(/\s+/).length;
+
+                        clause.push(trim(s, ";"));
+                    } else clause.push(trim(current, ";"));
+
+                    if (current.endsWith(";")) clause.push(";");
+                }
+
+                clause.push(parts[idx] ? trim(parts[idx], ";") : "");
+
+                if (!clause[clause.length - 1]?.startsWith("}")) throw new SyntaxError(`Unterminated clause.`);
+
+                tokens.push({ type: TokenTypes.CLAUSE.name, token: clause });
             }
 
-            clause.push(parts[idx] ? trim(parts[idx], ";") : "");
-
-            if (!clause[clause.length - 1]?.startsWith("}")) throw new SyntaxError(`Unterminated clause.`);
-
             toSkip = idx - i;
-
-            tokens.push({ type: TokenTypes.CLAUSE.name, token: clause });
         }
 
         if (parts[i]?.endsWith(";")) {

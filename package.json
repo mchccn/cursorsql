@@ -1,11 +1,12 @@
 {
     "name": "cursorsql",
     "version": "1.0.0",
-    "description": "the cursors query language",
+    "description": "CursorsQL, the query language for interacting with CursorsDB.",
     "main": "dist/index.js",
     "scripts": {
+        "dev:core": "nodemon src/core/index.ts",
         "dev:cli": "nodemon src/cli/index.ts",
-        "dev:cql": "nodemon src/lib/index.ts",
+        "dev:lib": "nodemon src/lib/index.ts",
         "test:server": "nodemon tests/server.ts"
     },
     "keywords": [],
@@ -18,15 +19,19 @@
     "bugs": {
         "url": "https://github.com/cursorsdottsx/cql/issues"
     },
-    "homepage": "https://github.com/cursorsdottsx/cql#readme",
+    "homepage": "https://cursorsdottsx.github.io/cql",
     "bin": {
         "cql": "./dist/cli/index.js"
     },
-    "dependencies": {},
+    "dependencies": {
+        "node-addon-api": "^3.1.0"
+    },
     "devDependencies": {
         "@types/node": "^15.0.1",
+        "node-gyp": "^8.0.0",
         "nodemon": "^2.0.7",
         "ts-node": "^9.1.1",
         "typescript": "^4.2.4"
-    }
+    },
+    "gypfile": true
 }
