@@ -123,13 +123,14 @@ Types can be suffixed with both `?` and `[]`.
 <sup>**There are 3 different types of clauses as follows:**</sup>
 
 - <sup>**`LIST_CLAUSE`** follows `{ item; ... }` where `item` is a `NAME`.</sup>
+- <sup>**`PROP_CLAUSE`** follows `{ prop value; ... }` where `prop` is a `NAME` and `value` is a `LITERAL` or list of `CONSTRAINT`'s.</sup>
 - <sup>**`DATA_CLAUSE`** follows `{ prop value; ... }` where `prop` is a `NAME` and `value` is a `LITERAL`.</sup>
 - <sup>**`META_CLAUSE`** follows `{ prop type [constraints]; ... }` where `prop` is a `NAME`, `type` is a `TYPE`, and `constraints` are `CONSTRAINT`'s</sup>
 
 #### select
 
 ```
-select <STAR | LIST_CLAUSE> from NAME [where DATA_CLAUSE, [CONSTRAINT, ...CONSTRAINT]];
+select <STAR | LIST_CLAUSE> from NAME [where PROP_CLAUSE, [CONSTRAINT, ...CONSTRAINT]];
 ```
 
 #### create
@@ -147,19 +148,19 @@ insert NAME DATA_CLAUSE;
 #### upsert
 
 ```
-upsert NAME DATA_CLAUSE DATA_CLAUSE;
+upsert NAME PROP_CLAUSE DATA_CLAUSE;
 ```
 
 #### update
 
 ```
-update NAME DATA_CLAUSE DATA_CLAUSE;
+update NAME <STAR | PROP_CLAUSE> DATA_CLAUSE;
 ```
 
 #### delete
 
 ```
-delete <NAME | STAR from NAME [where DATA_CLAUSE]>;
+delete <NAME | STAR from NAME [where PROP_CLAUSE]>;
 ```
 
 ## CursorsDB
