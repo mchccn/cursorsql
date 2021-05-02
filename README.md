@@ -210,3 +210,32 @@ In the future, more syntax and semantics will be added to provide more efficient
 
 The [documentation](https://cursorsdottsx.github.io/cql) has more information on CursorsML.
 
+# Contributing
+
+First, install all dependencies with either NPM or Yarn.
+
+NPM:
+
+```
+$ npm install
+```
+
+Yarn:
+
+```
+$ yarn
+```
+
+Next, use [`node-gyp`](https://github.com/nodejs/node-gyp) to build the C++ files (make sure to configure `node-gyp` first).
+
+```
+$ node-gyp build
+```
+
+When you make changes to the C++ files, rebuild them with the `rebuild` command.
+
+```
+$ node-gyp rebuild
+```
+
+When you are done with your changes open a [pull request](https://github.com/cursorsdottsx/cql/pulls) and it'll be reviewed soon.
