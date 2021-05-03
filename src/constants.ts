@@ -14,10 +14,12 @@ export const NULLABLE_ARRAY_NULLABLE_TYPES = (NULLABLE_TYPES.map((type) => `${ty
 
 export const TYPES = [...BASE_TYPES, ...ARRAY_TYPES, ...NULLABLE_ARRAY_TYPES, ...NULLABLE_TYPES, ...NULLABLE_ARRAY_NULLABLE_TYPES] as const;
 
-export const CONSTRAINTS = ["max", "min", "unique", "enum", "match"] as const;
+export const CONSTRAINTS = ["max", "min", "unique", "match"] as const;
+
+export const CONDITIONS = [">", "<", ">=", "<="] as const;
 
 export const MODIFIERS = ["order", "limit", "sort"] as const;
 
 export const KEYWORDS = ["select", "create", "update", "insert", "delete", "upsert", "from", "where"] as const;
 
-export const RESERVED_WORDS = [...KEYWORDS, ...CONSTRAINTS, ...MODIFIERS, ...BASE_TYPES, ...ARRAY_TYPES, ...NULLABLE_ARRAY_TYPES, ...NULLABLE_TYPES, ...NULLABLE_ARRAY_NULLABLE_TYPES] as const;
+export const RESERVED_WORDS = [...KEYWORDS, ...CONSTRAINTS, ...MODIFIERS, ...CONDITIONS, ...BASE_TYPES, ...ARRAY_TYPES, ...NULLABLE_ARRAY_TYPES, ...NULLABLE_TYPES, ...NULLABLE_ARRAY_NULLABLE_TYPES] as const;

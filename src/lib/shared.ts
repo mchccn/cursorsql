@@ -56,7 +56,7 @@ export const TokenTypes = {
     },
 } as const;
 
-export const SyntaxTree: Record<typeof KEYWORDS[number], CQLParser.SyntaxDescriptor[]> = {
+export const SyntaxTree: { [keyword: string]: CQLParser.SyntaxDescriptor[] } = {
     select: [
         {
             name: "columns",
@@ -179,4 +179,70 @@ export const SyntaxTree: Record<typeof KEYWORDS[number], CQLParser.SyntaxDescrip
             types: ["PROP_CLAUSE"],
         },
     ],
+    max: [
+        {
+            name: "max",
+            types: ["LITERAL"],
+        },
+    ],
+    min: [
+        {
+            name: "min",
+            types: ["LITERAL"],
+        },
+    ],
+    unique: [],
+    match: [
+        {
+            name: "match",
+            types: ["LITERAL"],
+        },
+    ],
+    order: [
+        {
+            name: "order",
+            types: ["LITERAL"],
+        },
+    ],
+    sort: [
+	{
+            name: "column",
+            types: ["NAME"],
+        },
+        {
+            name: "order",
+            types: ["LITERAL"],
+        },
+    ],
+    limit: [
+        {
+            name: "limit",
+            types: ["LITERAL"],
+        },
+    ],
+    ">": [
+        {
+            name: "value",
+            types: ["LITERAL"],
+        },
+    ],
+    "<": [
+        {
+            name: "value",
+            types: ["LITERAL"],
+        },
+    ],
+    ">=": [
+        {
+            name: "value",
+            types: ["LITERAL"],
+        },
+    ],
+    "<=": [
+        {
+            name: "value",
+            types: ["LITERAL"],
+        },
+    ],
 };
+

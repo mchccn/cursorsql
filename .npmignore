@@ -1,5 +1,9 @@
 banner.png
 tsconfig.json
 src/
+tests/
 docs/
 .github/
+.vscode/
+build/
+tsconfig.json

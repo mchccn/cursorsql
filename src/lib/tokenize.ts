@@ -11,8 +11,6 @@ export default function tokenize(query: string) {
 
     const strings = query.match(/(?:(?<!\\)"([^"]|(?<=\\)")*(?<!\\)")/g) ?? [];
 
-    console.log(strings);
-
     parts.forEach((part, i) => {
         const token = trim(part, ";");
 
@@ -25,7 +23,15 @@ export default function tokenize(query: string) {
         else if (TokenTypes.NAME.validator.test(token)) tokens.push({ type: TokenTypes.NAME.name, token });
         else if (TokenTypes.LITERAL.validator.test(token)) tokens.push({ type: TokenTypes.LITERAL.name, token });
         else if (TokenTypes.STAR.validator.test(token)) tokens.push({ type: TokenTypes.STAR.name, token });
-        else if (token.startsWith("{")) {
+        else if (token.startsWith('"')) {
+            const s = strings.shift();
+
+            if (!s) throw new Error(`Unterminated string literal.`);
+
+            toSkip = s.split(/\s+/).length;
+
+            tokens.push({ type: TokenTypes.LITERAL.name, token: s });
+        } else if (token.startsWith("{")) {
             let idx = i + 1;
 
             {
