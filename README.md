@@ -78,7 +78,7 @@ CQL has 6 different kinds of statements and only supports basic CRUD. They are a
 - `update` Updating a table
 - `delete` Deleting from a table
 
-In CQL, there ar 8 types of tokens, and they are:
+In CQL, there ar 8 primary types of tokens, and they are:
 
 - `KEYWORD` a special word
 - `CLAUSE` a block that holds some organized data
@@ -118,12 +118,32 @@ Types can be suffixed with both `?` and `[]`.
 - `type[]?` (as nullable array)
 - `type?[]?` (as nullable array of nullables)
 
+### Constraints
+
+CQL also has a few constraints. There is a regular `CONSTRAINT`, which is included in a table, that constrains a column in some way.
+
+There's also a `CONDITION` constraint that can be used instead of a value for querying.
+
+The `CONSTRAINT` constraints are:
+
+- `max` can be used to enforce a max value for numbers or max length for strings
+- `min` can be used to enforce a min value for numbers or min length for strings
+- `unique` can be used to enforce a unique column
+- `match` can be used to enforce strings to match a certain regex
+
+The `CONDITION` constraints are:
+
+- `>` can be used for numbers, strings, and even dates
+- `<` can be used for numbers, strings, and even dates
+- `>=` can be used for numbers, strings, and even dates
+- `<=` can be used for numbers, strings, and even dates
+
 ### Syntax
 
 <sup>**There are 3 different types of clauses as follows:**</sup>
 
 - <sup>**`LIST_CLAUSE`** follows `{ item; ... }` where `item` is a `NAME`.</sup>
-- <sup>**`PROP_CLAUSE`** follows `{ prop value; ... }` where `prop` is a `NAME` and `value` is a `LITERAL` or list of `CONSTRAINT`'s.</sup>
+- <sup>**`PROP_CLAUSE`** follows `{ prop value; ... }` where `prop` is a `NAME` and `value` is a `LITERAL` or a `CONDITION`.</sup>
 - <sup>**`DATA_CLAUSE`** follows `{ prop value; ... }` where `prop` is a `NAME` and `value` is a `LITERAL`.</sup>
 - <sup>**`META_CLAUSE`** follows `{ prop type [constraints]; ... }` where `prop` is a `NAME`, `type` is a `TYPE`, and `constraints` are `CONSTRAINT`'s</sup>
 
