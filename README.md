@@ -138,6 +138,18 @@ The `CONDITION` constraints are:
 - `>=` can be used for numbers, strings, and even dates
 - `<=` can be used for numbers, strings, and even dates
 
+### Modifiers
+
+In addition to constraints, CQL also supports modifiers after a `select` statement.
+
+Modifiers will modify the output a `select` statement produces.
+
+Currently, all supported modifiers are:
+
+- `order` will try to order the results as best as it can (1 for ascending and -1 for descending)
+- `sort` will sort the results by a column (1 for ascending and -1 for descending)
+- `limit` will limit the result count to a maximum value
+
 ### Syntax
 
 <sup>**There are 3 different types of clauses as follows:**</sup>
@@ -150,7 +162,7 @@ The `CONDITION` constraints are:
 #### select
 
 ```
-select <STAR | LIST_CLAUSE> from NAME [where PROP_CLAUSE, [CONSTRAINT, ...CONSTRAINT]];
+select <STAR | LIST_CLAUSE> from NAME [where PROP_CLAUSE] [MODIFIER, ...MODIFIER];
 ```
 
 #### create
