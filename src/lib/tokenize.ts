@@ -14,10 +14,7 @@ export default function tokenize(query: string) {
     parts.forEach((part, i) => {
         const token = trim(part, ";");
 
-        if (toSkip) {
-            toSkip--;
-            return;
-        }
+        if (toSkip) return toSkip--;
 
         if (TokenTypes.KEYWORD.validator.test(token)) tokens.push({ type: TokenTypes.KEYWORD.name, token });
         else if (TokenTypes.NAME.validator.test(token)) tokens.push({ type: TokenTypes.NAME.name, token });

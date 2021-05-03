@@ -1,4 +1,4 @@
-import { CONSTRAINTS, KEYWORDS, RESERVED_WORDS, TYPES } from "../constants";
+import { CONDITIONS, CONSTRAINTS, RESERVED_WORDS, TYPES } from "../constants";
 import { CQLParser } from "../types";
 
 export const TokenTypes = {
@@ -8,6 +8,22 @@ export const TokenTypes = {
     },
     CLAUSE: {
         name: "CLAUSE",
+        validator: /^(\{.*\})$/s,
+    },
+    LIST_CLAUSE: {
+        name: "LIST_CLAUSE",
+        validator: /^(\{.*\})$/s,
+    },
+    PROP_CLAUSE: {
+        name: "PROP_CLAUSE",
+        validator: /^(\{.*\})$/s,
+    },
+    DATA_CLAUSE: {
+        name: "DATA_CLAUSE",
+        validator: /^(\{.*\})$/s,
+    },
+    META_CLAUSE: {
+        name: "META_CLAUSE",
         validator: /^(\{.*\})$/s,
     },
     KEYWORD: {
@@ -25,6 +41,10 @@ export const TokenTypes = {
     CONSTRAINT: {
         type: "CONSTRAINT",
         validator: new RegExp(`^(${CONSTRAINTS.map(escape).join("|")})$`),
+    },
+    CONDITION: {
+        type: "CONDITION",
+        validator: new RegExp(`^(${CONDITIONS.map(escape).join("|")})$`),
     },
     STAR: {
         name: "STAR",
@@ -100,6 +120,10 @@ export const SyntaxTree: { [keyword: string]: CQLParser.SyntaxDescriptor[] } = {
             name: "data",
             types: ["META_CLAUSE"],
         },
+        {
+            name: "end",
+            types: ["SEMICOLON"],
+        },
     ],
     update: [
         {
@@ -114,6 +138,10 @@ export const SyntaxTree: { [keyword: string]: CQLParser.SyntaxDescriptor[] } = {
             name: "data",
             types: ["DATA_CLAUSE"],
         },
+        {
+            name: "end",
+            types: ["SEMICOLON"],
+        },
     ],
     insert: [
         {
@@ -123,6 +151,10 @@ export const SyntaxTree: { [keyword: string]: CQLParser.SyntaxDescriptor[] } = {
         {
             name: "data",
             types: ["DATA_CLAUSE"],
+        },
+        {
+            name: "end",
+            types: ["SEMICOLON"],
         },
     ],
     delete: [
@@ -152,6 +184,10 @@ export const SyntaxTree: { [keyword: string]: CQLParser.SyntaxDescriptor[] } = {
                 ],
             ],
         },
+        {
+            name: "end",
+            types: ["SEMICOLON"],
+        },
     ],
     upsert: [
         {
@@ -165,6 +201,10 @@ export const SyntaxTree: { [keyword: string]: CQLParser.SyntaxDescriptor[] } = {
         {
             name: "data",
             types: ["DATA_CLAUSE"],
+        },
+        {
+            name: "end",
+            types: ["SEMICOLON"],
         },
     ],
     from: [
@@ -205,7 +245,7 @@ export const SyntaxTree: { [keyword: string]: CQLParser.SyntaxDescriptor[] } = {
         },
     ],
     sort: [
-	{
+        {
             name: "column",
             types: ["NAME"],
         },
@@ -245,4 +285,3 @@ export const SyntaxTree: { [keyword: string]: CQLParser.SyntaxDescriptor[] } = {
         },
     ],
 };
-

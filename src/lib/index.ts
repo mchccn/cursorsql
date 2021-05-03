@@ -14,6 +14,5 @@ function query(strings: string | TemplateStringsArray, ...values: unknown[]) {
 query`select * from table where { 
     id "cursors";
     name "scursos ";
-}
-order -1 limit 10; 
+};
 select * from table2;`;
