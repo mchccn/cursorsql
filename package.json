@@ -8,7 +8,8 @@
         "dev:cli": "nodemon src/cli/index.ts",
         "dev:lib": "nodemon src/lib/index.ts",
         "test:server": "nodemon tests/server.ts",
-        "test": "mocha -r ts-node/register 'tests/index.ts'"
+        "test": "mocha -r ts-node/register 'tests/index.ts'",
+        "build": "node-gyp rebuild"
     },
     "keywords": [],
     "author": "im-lonely <cursors.dev@gmail.com>",

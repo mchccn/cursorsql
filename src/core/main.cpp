@@ -11,17 +11,19 @@ namespace core {
     using v8::Value;
 
     using namespace std;
-    using namespace std::__fs::filesystem;
+    using namespace std::filesystem;
     using namespace std::chrono;
 
-    void Method(const FunctionCallbackInfo<Value>& args) {
+    void Ping(const FunctionCallbackInfo<Value>& args) {
         Isolate* isolate = args.GetIsolate();
 
-        args.GetReturnValue().Set(String::NewFromUtf8(isolate, "world").ToLocalChecked());
+        args.GetReturnValue().Set(String::NewFromUtf8(isolate, "pong").ToLocalChecked());
     }
 
+    
+
     void Initialize(Local<Object> exports) {
-        NODE_SET_METHOD(exports, "hello", Method);
+        NODE_SET_METHOD(exports, "ping", Ping);
     }
 
     NODE_MODULE(NODE_GYP_MODULE_NAME, Initialize)

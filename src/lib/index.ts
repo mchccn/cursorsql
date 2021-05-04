@@ -6,7 +6,7 @@ function query(strings: string | TemplateStringsArray, ...values: unknown[]) {
 
     const tokens = tokenize(query);
 
-    validate(tokens);
+    validate(tokens); // ! BROKEN FIX SOON
 
     console.log(tokens);
 }
