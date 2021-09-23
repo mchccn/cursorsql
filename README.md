@@ -38,10 +38,10 @@ Types for TypeScript are included as the project is in TypeScript.
 
 There is some configuration and setup required before you use CQL and the database driver, though.
 
-- First you'll need to use `cql config` to set up CursorsDB.
-- Next, use `cql` to use the CLI.
-- Create a new database with the CLI.
-- Use the database driver and connect to the database.
+-   First you'll need to use `cql config` to set up CursorsDB.
+-   Next, use `cql` to use the CLI.
+-   Create a new database with the CLI.
+-   Use the database driver and connect to the database.
 
 Example usage:
 
@@ -49,17 +49,17 @@ Example usage:
 const CQLClient = require("cursorsql");
 
 (async () => {
-  const client = new CQLClient("cql connection string");
-  
-  await new Promise((resolve, reject) => {
-    client.on("ready", () => {
-      console.log("Connected to CursorsDB!");
-      
-      return resolve();
-    });
-  });
+    const client = new CQLClient("cql connection string");
 
-  // Use `client` to execute queries
+    await new Promise((resolve, reject) => {
+        client.on("ready", () => {
+            console.log("Connected to CursorsDB!");
+
+            return resolve();
+        });
+    });
+
+    // Use `client` to execute queries
 })();
 ```
 
@@ -71,52 +71,53 @@ const CQLClient = require("cursorsql");
 
 CQL has 6 different kinds of statements and only supports basic CRUD. They are as follows:
 
-- `select` Reading from the database
-- `create` Creating a new table
-- `insert` Inserting into a table
-- `upsert` Upserting into a table
-- `update` Updating a table
-- `delete` Deleting from a table
+-   `select` Reading from the database
+-   `create` Creating a new table
+-   `insert` Inserting into a table
+-   `upsert` Upserting into a table
+-   `update` Updating a table
+-   `delete` Deleting from a table
 
-In CQL, there ar 8 primary types of tokens, and they are:
+In CQL, there are 8 primary types of tokens, and they are:
 
-- `KEYWORD` a special word
-- `CLAUSE` a block that holds some organized data
-- `NAME` an identifier for something
-- `LITERAL` numbers, strings, dates, booleans and null
-- `TYPE` a data type
-- `STAR` represents everything
-- `SEMICOLON` ends a statement
-- `CONSTRAINT` query constraints or table column constraints
+-   `KEYWORD` a special word
+-   `CLAUSE` a block that holds some organized data
+-   `NAME` an identifier for something
+-   `LITERAL` numbers, strings, dates, booleans and null
+-   `TYPE` a data type
+-   `STAR` represents everything
+-   `SEMICOLON` ends a statement
+-   `CONSTRAINT` query constraints or table column constraints
 
 ### Types
 
 CQL supports many primitive types and arrays along with nullables.
 
-- `int8` 8 bit integer
-- `int16` 16 bit integer
-- `int32` 32 bit integer
-- `uint8` unsigned 8 bit integer
-- `uint16` unsigned 16 bit integer
-- `uint32` unsigned 32 bit integer
-- `float16` 16 bit floating point number
-- `float32` 32 bit floating point number
-- `double16` 16 bit double precision floating point number
-- `double32` 32 bit double precision floating point number
-- `boolean` boolean
-- `string` string
-- `date` ISO 8601 date
-- `null` null
+-   `int8` 8 bit integer
+-   `int16` 16 bit integer
+-   `int32` 32 bit integer
+-   `uint8` unsigned 8 bit integer
+-   `uint16` unsigned 16 bit integer
+-   `uint32` unsigned 32 bit integer
+-   `float16` 16 bit floating point number
+-   `float32` 32 bit floating point number
+-   `double16` 16 bit double precision floating point number
+-   `double32` 32 bit double precision floating point number
+-   `boolean` boolean
+-   `string` string
+-   `date` ISO 8601 date
+-   `null` null
 
 Suffixing a type with `?` will make the type nullable, and suffixing a type with `[]` will make the type an array.
 
 Types can be suffixed with both `?` and `[]`.
 
-- `type` (regular)
-- `type?` (nullable)
-- `type[]` (as array)
-- `type[]?` (as nullable array)
-- `type?[]?` (as nullable array of nullables)
+-   `type` (regular)
+-   `type?` (nullable)
+-   `type[]` (as array)
+-   `type?[]` (as array of nullables)
+-   `type[]?` (as nullable array)
+-   `type?[]?` (as nullable array of nullables)
 
 ### Constraints
 
@@ -126,17 +127,17 @@ There's also a `CONDITION` constraint that can be used instead of a value for qu
 
 The `CONSTRAINT` constraints are:
 
-- `max` can be used to enforce a max value for numbers or max length for strings
-- `min` can be used to enforce a min value for numbers or min length for strings
-- `unique` can be used to enforce a unique column
-- `match` can be used to enforce strings to match a certain regex
+-   `max` can be used to enforce a max value for numbers or max length for strings
+-   `min` can be used to enforce a min value for numbers or min length for strings
+-   `unique` can be used to enforce a unique column
+-   `match` can be used to enforce strings to match a certain regex
 
 The `CONDITION` constraints are:
 
-- `>` can be used for numbers, strings, and even dates
-- `<` can be used for numbers, strings, and even dates
-- `>=` can be used for numbers, strings, and even dates
-- `<=` can be used for numbers, strings, and even dates
+-   `>` can be used for numbers, strings, and even dates
+-   `<` can be used for numbers, strings, and even dates
+-   `>=` can be used for numbers, strings, and even dates
+-   `<=` can be used for numbers, strings, and even dates
 
 ### Modifiers
 
@@ -146,18 +147,18 @@ Modifiers will modify the output a `select` statement produces.
 
 Currently, all supported modifiers are:
 
-- `order` will try to order the results as best as it can (1 for ascending and -1 for descending)
-- `sort` will sort the results by a column (1 for ascending and -1 for descending)
-- `limit` will limit the result count to a maximum value
+-   `order` will try to order the results as best as it can (1 for ascending and -1 for descending)
+-   `sort` will sort the results by a column (1 for ascending and -1 for descending)
+-   `limit` will limit the result count to a maximum value
 
 ### Syntax
 
 <sup>**There are 3 different types of clauses as follows:**</sup>
 
-- <sup>**`LIST_CLAUSE`** follows `{ item; ... }` where `item` is a `NAME`.</sup>
-- <sup>**`PROP_CLAUSE`** follows `{ prop value; ... }` where `prop` is a `NAME` and `value` is a `LITERAL` or a `CONDITION`.</sup>
-- <sup>**`DATA_CLAUSE`** follows `{ prop value; ... }` where `prop` is a `NAME` and `value` is a `LITERAL`.</sup>
-- <sup>**`META_CLAUSE`** follows `{ prop type [constraints]; ... }` where `prop` is a `NAME`, `type` is a `TYPE`, and `constraints` are `CONSTRAINT`'s</sup>
+-   <sup>**`LIST_CLAUSE`** follows `{ item; ... }` where `item` is a `NAME`.</sup>
+-   <sup>**`PROP_CLAUSE`** follows `{ prop value; ... }` where `prop` is a `NAME` and `value` is a `LITERAL` or a `CONDITION`.</sup>
+-   <sup>**`DATA_CLAUSE`** follows `{ prop value; ... }` where `prop` is a `NAME` and `value` is a `LITERAL`.</sup>
+-   <sup>**`META_CLAUSE`** follows `{ prop type [constraints]; ... }` where `prop` is a `NAME`, `type` is a `TYPE`, and `constraints` are `CONSTRAINT`'s</sup>
 
 #### select
 
@@ -199,7 +200,7 @@ delete <NAME | STAR from NAME [where PROP_CLAUSE]>;
 
 ### Introduction
 
-Unlike SQL, CursorsDB does not store SQL statements in `.cql` files. CQL is only used for CRUD and never appears inside CursorsDB. 
+Unlike SQL, CursorsDB does not store SQL statements in `.cql` files. CQL is only used for CRUD and never appears inside CursorsDB.
 CursorsDB is simply a way to store data efficiently and in a way that is fast and understandable to beginners.
 
 CursorsDB can be even thought of as a file format.
@@ -244,6 +245,11 @@ The [documentation](https://cursorsdottsx.github.io/cql) has more information on
 
 # Contributing
 
+### Requirements
+
+-   Node.js v14 or newer
+-   Rust v1.55 or newer
+
 First, install all dependencies with either NPM or Yarn.
 
 NPM:
@@ -258,16 +264,13 @@ Yarn:
 $ yarn
 ```
 
-Next, use [`node-gyp`](https://github.com/nodejs/node-gyp) to build the C++ files (make sure to configure `node-gyp` first).
+Next, install dependencies inside the server.
 
 ```
-$ node-gyp build
+$ cd server/
+$ cargo install
 ```
 
-When you make changes to the C++ files, rebuild them with the `rebuild` command.
+Then, create your changes and commit them.
 
-```
-$ node-gyp rebuild
-```
-
-When you are done with your changes open a [pull request](https://github.com/cursorsdottsx/cql/pulls) and it'll be reviewed soon.
+Finally, open a pull request!
