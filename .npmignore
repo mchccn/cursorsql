@@ -6,4 +6,4 @@ docs/
 .github/
 .vscode/
 build/
-tsconfig.json
+server/

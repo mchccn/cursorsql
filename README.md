@@ -83,7 +83,7 @@ In CQL, there are 8 primary types of tokens, and they are:
 -   `KEYWORD` a special word
 -   `CLAUSE` a block that holds some organized data
 -   `NAME` an identifier for something
--   `LITERAL` numbers, strings, dates, booleans and null
+-   `LITERAL` numbers, strings, booleans and null
 -   `TYPE` a data type
 -   `STAR` represents everything
 -   `SEMICOLON` ends a statement
@@ -93,19 +93,18 @@ In CQL, there are 8 primary types of tokens, and they are:
 
 CQL supports many primitive types and arrays along with nullables.
 
--   `int8` 8 bit integer
--   `int16` 16 bit integer
--   `int32` 32 bit integer
--   `uint8` unsigned 8 bit integer
--   `uint16` unsigned 16 bit integer
--   `uint32` unsigned 32 bit integer
--   `float16` 16 bit floating point number
--   `float32` 32 bit floating point number
--   `double16` 16 bit double precision floating point number
--   `double32` 32 bit double precision floating point number
--   `boolean` boolean
--   `string` string
--   `date` ISO 8601 date
+-   `i8` 8 bit integer
+-   `i16` 16 bit integer
+-   `i32` 32 bit integer
+-   `i64` 64 bit integer
+-   `u8` unsigned 8 bit integer
+-   `u16` unsigned 16 bit integer
+-   `u32` unsigned 32 bit integer
+-   `u64` unsigned 64 bit integer
+-   `f32` 32 bit IEEE-754
+-   `f64` 64 bit IEEE-754
+-   `bool` boolean
+-   `str` string
 -   `null` null
 
 Suffixing a type with `?` will make the type nullable, and suffixing a type with `[]` will make the type an array.
@@ -130,7 +129,6 @@ The `CONSTRAINT` constraints are:
 -   `max` can be used to enforce a max value for numbers or max length for strings
 -   `min` can be used to enforce a min value for numbers or min length for strings
 -   `unique` can be used to enforce a unique column
--   `match` can be used to enforce strings to match a certain regex
 
 The `CONDITION` constraints are:
 
@@ -268,7 +266,7 @@ Next, install dependencies inside the server.
 
 ```
 $ cd server/
-$ cargo install
+$ cargo build
 ```
 
 Then, create your changes and commit them.
