@@ -14,6 +14,18 @@ export class Scanner {
         ["f64", TokenType.Float64],
         ["bool", TokenType.Bool],
         ["str", TokenType.Str],
+        ["i8?", TokenType.NInt8],
+        ["i16?", TokenType.NInt16],
+        ["i32?", TokenType.NInt32],
+        ["i64?", TokenType.NInt64],
+        ["u8?", TokenType.NUInt8],
+        ["u16?", TokenType.NUInt16],
+        ["u32?", TokenType.NUInt32],
+        ["u64?", TokenType.NUInt64],
+        ["f32?", TokenType.NFloat32],
+        ["f64?", TokenType.NFloat64],
+        ["bool?", TokenType.NBool],
+        ["str?", TokenType.NStr],
         ["sort", TokenType.Sort],
         ["order", TokenType.Order],
         ["limit", TokenType.Limit],
@@ -100,7 +112,7 @@ export class Scanner {
                 } else if (this.isAlpha(c)) {
                     this.identifier();
                 } else {
-                    throw new SyntaxError(`Unexpected character at line ${this.line}, column ${this.col}.`);
+                    throw new SyntaxError(`Unexpected character '${c}' at line ${this.line}, column ${this.col}.`);
                 }
                 break;
         }
@@ -137,9 +149,13 @@ export class Scanner {
     private identifier() {
         while (this.isAlphaNumeric(this.peek())) this.advance();
 
+        if (this.peek() === "?") this.advance();
+
         const text = this.source.substring(this.start, this.current);
 
         const type = Scanner.keywords.get(text.toLowerCase()) ?? TokenType.Identifier;
+
+        if (text.endsWith("?") && type === TokenType.Identifier) throw new SyntaxError(`Cannot make an identifier nullable with '?'.`);
 
         this.addToken(type);
     }
