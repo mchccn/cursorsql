@@ -32,7 +32,7 @@ export class Parser {
 
         if (p) return p(this);
 
-        throw new Error(`Assertion failed: unexpected type #${type}.`);
+        throw new Error(`Assertion failed: unexpected type '${TokenType[type]}'.`);
     }
 
     private parseCreate(): CreateStatement {}
@@ -42,13 +42,27 @@ export class Parser {
     private parseSelect(): SelectStatement {
         const target = this.tokens[0];
 
-        this.consume(`Expected '*' or '{', instead found ${target ? `'${target?.lexeme ?? ""}'` : `nothing`}.`, TokenType.Star, TokenType.LeftBracket);
+        const cols = [] as Token[];
+
+        if (
+            this.consume(`Expected '*' or '{', instead found ${target ? `'${target?.lexeme ?? ""}'` : `nothing`}.`, TokenType.Star, TokenType.LeftBracket)
+                .type === TokenType.LeftBracket
+        ) {
+            while (this.tokens.length && this.tokens[0].type !== TokenType.RightBracket) {
+                cols.push(this.tokens.shift()!);
+
+                if (this.tokens[+0].type !== TokenType.RightBracket)
+                    this.consume(`Expected ',' or '}', instead found '${this.tokens[0].lexeme}'.`, TokenType.Comma);
+            }
+
+            this.consume(`Expected '}' after list.`, TokenType.RightBracket);
+        }
 
         const table = this.tokens[0];
 
         this.consume(`Expected 'from', instead found ${table ? `'${table?.lexeme ?? ""}'` : `nothing`}.`, TokenType.From);
 
-        return new SelectStatement(target.type === TokenType.Star ? "*" : [], this.tokens.shift()!, this.parseFilters(), this.parseModifiers());
+        return new SelectStatement(target.type === TokenType.Star ? "*" : cols, this.tokens.shift()!, this.parseFilters(), this.parseModifiers());
     }
 
     private parseUpsert(): UpsertStatement {}

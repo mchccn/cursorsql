@@ -68,7 +68,7 @@ export class Token {
     public constructor(
         public readonly type: TokenType,
         public readonly lexeme: string,
-        public readonly literal: unknown,
+        public readonly literal: string,
         public readonly line: number,
         public readonly col: number
     ) {}

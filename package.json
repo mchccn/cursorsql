@@ -1,27 +1,38 @@
 {
     "name": "cursorsql",
     "version": "1.0.0",
-    "description": "CursorsQL, the query language for interacting with CursorsDB.",
+    "description": "Primitive CursorsQL driver and frontend.",
     "main": "dist/index.js",
-    "scripts": {},
+    "scripts": {
+        "watch": "tsc -w",
+        "test": "env TS_NODE_PROJECT='./tsconfig.json' mocha -r ts-node/register 'tests/**/*.ts' --watch .",
+        "build": "tsc",
+        "deploy": "cd docs && yarn deploy && cd .."
+    },
     "keywords": [],
-    "author": "im-lonely <cursors.dev@gmail.com>",
+    "author": "cursorsdottsx <cursors.dev@gmail.com>",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/cursorsdottsx/cql.git"
+        "url": "git+https://github.com/cursorsdottsx/cursorsql.git"
     },
     "bugs": {
-        "url": "https://github.com/cursorsdottsx/cql/issues"
+        "url": "https://github.com/cursorsdottsx/cursorsql/issues"
     },
-    "homepage": "https://cursorsdottsx.github.io/cql",
+    "homepage": "https://cursorsdottsx.github.io/cursorsql",
     "bin": {
         "cql": ""
     },
     "dependencies": {},
     "devDependencies": {
+        "@types/chai": "^4.3.0",
+        "@types/mocha": "^9.1.0",
         "@types/node": "^16.9.2",
-        "ts-lib": "^0.0.5",
+        "chai": "^4.3.6",
+        "chalk": "^5.0.0",
+        "dotenv": "^16.0.0",
+        "mocha": "^9.2.0",
+        "ts-node": "^10.4.0",
         "typescript": "^4.4.3"
     }
 }

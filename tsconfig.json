@@ -4,14 +4,18 @@
         "module": "commonjs",
         "lib": ["esnext", "esnext.asynciterable"],
         "outDir": "./dist",
-        "moduleResolution": "node",
+        "importHelpers": true,
+        "strict": true,
         "noImplicitAny": true,
         "noImplicitThis": true,
+        "alwaysStrict": true,
+        "noImplicitReturns": true,
+        "moduleResolution": "node",
         "esModuleInterop": true,
-        "resolveJsonModule": true,
-        "strict": true,
-        "alwaysStrict": true
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "forceConsistentCasingInFileNames": true
     },
-    "exclude": ["tests/**/*.ts", "node_modules"],
+    "exclude": ["tests/**/*.ts", "node_modules", "dist"],
     "include": ["src/**/*.ts"]
 }

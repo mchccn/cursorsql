@@ -1,7 +1,8 @@
-import { Compiler } from "./compiler";
+import { Compiler } from "./compiler/compiler";
+import { OpCode } from "./opcode";
 
-//
-
-console.clear();
-
-console.log(Compiler.compile("select * from table;"));
+console.log(
+    Array.from(Compiler.compile("select { col } from table where { id = 1};"))
+        .map((b) => `${b.toString(16).padStart(2, "0")} ${OpCode[b] ?? ""}`)
+        .join("\n")
+);

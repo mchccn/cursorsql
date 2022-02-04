@@ -198,10 +198,10 @@ export class Scanner {
         return this.isAlpha(c) || this.isDigit(c);
     }
 
-    private addToken(type: TokenType, literal?: unknown) {
+    private addToken(type: TokenType, literal?: string) {
         const text = this.source.substring(this.start, this.current);
 
-        this.tokens.push(new Token(type, text, literal ?? null, this.line, this.col));
+        this.tokens.push(new Token(type, text, literal ?? "", this.line, this.col));
 
         this.col += text.length;
     }
