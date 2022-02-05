@@ -1,4 +1,4 @@
-import { Compiler } from "./compiler/compiler";
+import { Compiler } from "./compiler";
 import { OpCode } from "./opcode";
 
 console.log(
