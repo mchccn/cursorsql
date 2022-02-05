@@ -2,11 +2,10 @@ import { OpCode } from "../opcode";
 import { Parser } from "../parser";
 import { Scanner } from "../scanner";
 import { CreateStatement, DeleteStatement, InsertStatement, SelectStatement, Statement, UpdateStatement, UpsertStatement } from "../statement";
-import { compileComparison } from "./comparison";
+import { compileFilter } from "./filter";
 import { compileIdentifier } from "./identifier";
+import { compileListLike } from "./listlike";
 import { compileModifier } from "./modifier";
-import { compileSize } from "./size";
-import { compileValue } from "./value";
 
 export class Compiler {
     private static readonly compileMap = new Map<Statement["type"], (statement: Statement) => number[]>([
@@ -59,33 +58,11 @@ export class Compiler {
 
         bytes.push(...compileIdentifier(stmt.table));
 
-        if (stmt.cols === "*") {
-            bytes.push(OpCode.OpStar);
-        } else {
-            const list = stmt.cols.flatMap((t) => compileIdentifier(t));
+        bytes.push(...(stmt.cols === "*" ? [OpCode.OpStar] : [OpCode.OpListClause, ...compileListLike(stmt.cols.flatMap(compileIdentifier))]));
 
-            bytes.push(OpCode.OpListClause, ...compileSize(list.length), ...list);
-        }
+        if (stmt.filters.length) bytes.push(OpCode.OpWhere, ...compileListLike(stmt.filters.flatMap(compileFilter)));
 
-        if (stmt.filters.length) {
-            const list = stmt.filters.flatMap((f) => {
-                const identifier = compileIdentifier(f.col);
-
-                const comparison = compileComparison(f.type);
-
-                const value = compileValue(f.value);
-
-                return [comparison, OpCode.OpIdentifier, ...compileSize(identifier.length), ...identifier, ...value];
-            });
-
-            bytes.push(OpCode.OpWhere, ...compileSize(list.length), ...list);
-        }
-
-        if (stmt.modifiers.length) {
-            const mods = stmt.modifiers.flatMap((m) => compileModifier(m));
-
-            bytes.push(...mods);
-        }
+        if (stmt.modifiers.length) bytes.push(...stmt.modifiers.flatMap(compileModifier));
 
         bytes.push(OpCode.OpReturn);
 
