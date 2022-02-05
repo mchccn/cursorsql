@@ -40,6 +40,8 @@ export class Compiler {
 
         const stmt = statement as CreateStatement;
 
+        bytes.push(...compileIdentifier(stmt.table));
+
         bytes.push(OpCode.OpReturn);
 
         return bytes;
@@ -91,6 +93,8 @@ export class Compiler {
 
         const stmt = statement as UpsertStatement;
 
+        bytes.push(...compileIdentifier(stmt.table));
+
         return bytes;
     }
 
@@ -100,6 +104,8 @@ export class Compiler {
         if (statement.type !== "update") throw new TypeError(`Statement type is not 'update'.`);
 
         const stmt = statement as UpdateStatement;
+
+        bytes.push(...compileIdentifier(stmt.table));
 
         bytes.push(OpCode.OpReturn);
 
@@ -112,6 +118,15 @@ export class Compiler {
         if (statement.type !== "delete") throw new TypeError(`Statement type is not 'delete'.`);
 
         const stmt = statement as DeleteStatement;
+
+        bytes.push(...compileIdentifier(stmt.table));
+
+        bytes.push(
+            ...(stmt.filters.length ? [OpCode.OpWhere] : []),
+            ...compileListLike(stmt.filters.flatMap(compileFilter), true)
+        );
+
+        bytes.push(...stmt.modifiers.flatMap(compileModifier));
 
         bytes.push(OpCode.OpReturn);
 

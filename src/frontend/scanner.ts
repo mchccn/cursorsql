@@ -46,7 +46,7 @@ export class Scanner {
 
     private start = 0;
     private current = 0;
-    private line = 0;
+    private line = 1;
     private col = 1;
 
     public constructor(public readonly source: string) {}

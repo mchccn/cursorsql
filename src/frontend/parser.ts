@@ -90,7 +90,7 @@ export class Parser {
 
         return new SelectStatement(
             target.type === TokenType.Star ? "*" : cols,
-            this.tokens.shift()!,
+            this.consume(`Expected table name, instead found '${this.tokens[0].lexeme}'.`, TokenType.Identifier),
             this.parseFilters(),
             this.parseModifiers()
         );
@@ -100,7 +100,14 @@ export class Parser {
 
     private parseUpdate(): UpdateStatement {}
 
-    private parseDelete(): DeleteStatement {}
+    private parseDelete(): DeleteStatement {
+        const target = this.consume(
+            `Expected table name, instead found '${this.tokens[0].lexeme}'.`,
+            TokenType.Identifier
+        );
+
+        return new DeleteStatement(target, this.parseFilters(), this.parseModifiers());
+    }
 
     private parseFilters(): Filter[] {
         if (!this.tokens.length) return [];
