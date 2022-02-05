@@ -3,7 +3,8 @@ import { OpCode } from "../opcode";
 import { Token, TokenType } from "../token";
 
 export function compileValue(t: Token) {
-    if (![TokenType.Number, TokenType.Boolean, TokenType.String].includes(t.type)) throw new TypeError(`Token is not a value.`);
+    if (![TokenType.Number, TokenType.Boolean, TokenType.String].includes(t.type))
+        throw new TypeError(`Token is not a value.`);
 
     if (t.type === TokenType.Number) {
         const dv = new DataView(new ArrayBuffer(64 / 8));

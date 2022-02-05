@@ -155,7 +155,8 @@ export class Scanner {
 
         const type = Scanner.keywords.get(text.toLowerCase()) ?? TokenType.Identifier;
 
-        if (text.endsWith("?") && type === TokenType.Identifier) throw new SyntaxError(`Cannot make an identifier nullable with '?'.`);
+        if (text.endsWith("?") && type === TokenType.Identifier)
+            throw new SyntaxError(`Cannot make an identifier nullable with '?'.`);
 
         this.addToken(type);
     }

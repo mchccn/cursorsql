@@ -1,7 +1,15 @@
 import { OpCode } from "../opcode";
 import { Parser } from "../parser";
 import { Scanner } from "../scanner";
-import { CreateStatement, DeleteStatement, InsertStatement, SelectStatement, Statement, UpdateStatement, UpsertStatement } from "../statement";
+import {
+    CreateStatement,
+    DeleteStatement,
+    InsertStatement,
+    SelectStatement,
+    Statement,
+    UpdateStatement,
+    UpsertStatement,
+} from "../statement";
 import { compileFilter } from "./filter";
 import { compileIdentifier } from "./identifier";
 import { compileListLike } from "./listlike";
@@ -58,7 +66,11 @@ export class Compiler {
 
         bytes.push(...compileIdentifier(stmt.table));
 
-        bytes.push(...(stmt.cols === "*" ? [OpCode.OpStar] : [OpCode.OpListClause, ...compileListLike(stmt.cols.flatMap(compileIdentifier))]));
+        bytes.push(
+            ...(stmt.cols === "*"
+                ? [OpCode.OpStar]
+                : [OpCode.OpListClause, ...compileListLike(stmt.cols.flatMap(compileIdentifier))])
+        );
 
         if (stmt.filters.length) bytes.push(OpCode.OpWhere, ...compileListLike(stmt.filters.flatMap(compileFilter)));
 
