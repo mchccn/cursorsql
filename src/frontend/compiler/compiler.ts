@@ -72,9 +72,12 @@ export class Compiler {
                 : [OpCode.OpListClause, ...compileListLike(stmt.cols.flatMap(compileIdentifier))])
         );
 
-        if (stmt.filters.length) bytes.push(OpCode.OpWhere, ...compileListLike(stmt.filters.flatMap(compileFilter)));
+        bytes.push(
+            ...(stmt.filters.length ? [OpCode.OpWhere] : []),
+            ...compileListLike(stmt.filters.flatMap(compileFilter), true)
+        );
 
-        if (stmt.modifiers.length) bytes.push(...stmt.modifiers.flatMap(compileModifier));
+        bytes.push(...stmt.modifiers.flatMap(compileModifier));
 
         bytes.push(OpCode.OpReturn);
 
