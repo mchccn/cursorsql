@@ -9,7 +9,7 @@ export function compileValue(t: Token) {
         const dv = new DataView(new ArrayBuffer(64 / 8));
 
         if (t.literal.includes(".")) {
-            dv.setFloat64(0, Number(t.literal), true);
+            dv.setFloat64(0, Number(t.literal));
 
             return [OpCode.OpFloat64, ...Array.from(new Uint8Array(dv.buffer))];
         }
@@ -23,5 +23,5 @@ export function compileValue(t: Token) {
 
     if (t.type === TokenType.String) return [OpCode.OpString, ...new TextEncoder().encode(t.literal as string)];
 
-    throw "";
+    throw void 0;
 }
