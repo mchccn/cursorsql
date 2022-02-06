@@ -1,4 +1,4 @@
-pub  enum OpCode {
+pub enum OpCode {
     // Values
     OpStar = 0xa0,
     OpIdentifier = 0xa1,
@@ -51,4 +51,3 @@ pub  enum OpCode {
     // Semicolon
     OpReturn = 0xff,
 }
-
