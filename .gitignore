@@ -116,6 +116,7 @@ dist
 .pnp.*
 
 build
-.vscode
 
 target/
+
+.DS_Store
