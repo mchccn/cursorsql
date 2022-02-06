@@ -77,3 +77,52 @@ export class Token {
         return `${this.type} ${this.lexeme} ${this.literal}`;
     }
 }
+
+export const coltypeTokens = [
+    TokenType.Int8,
+    TokenType.Int16,
+    TokenType.Int32,
+    TokenType.Int64,
+    TokenType.UInt8,
+    TokenType.UInt16,
+    TokenType.UInt32,
+    TokenType.UInt64,
+    TokenType.Float32,
+    TokenType.Float64,
+    TokenType.Bool,
+    TokenType.Str,
+    TokenType.NInt8,
+    TokenType.NInt16,
+    TokenType.NInt32,
+    TokenType.NInt64,
+    TokenType.NUInt8,
+    TokenType.NUInt16,
+    TokenType.NUInt32,
+    TokenType.NUInt64,
+    TokenType.NFloat32,
+    TokenType.NFloat64,
+    TokenType.NBool,
+    TokenType.NStr,
+];
+
+export const constraintTokens = [TokenType.Max, TokenType.Min, TokenType.Unique];
+
+export const valueTokens = [TokenType.Number, TokenType.Boolean, TokenType.String, TokenType.Null];
+
+export const statementTokens = [
+    TokenType.Create,
+    TokenType.Insert,
+    TokenType.Select,
+    TokenType.Upsert,
+    TokenType.Update,
+    TokenType.Delete,
+];
+
+export const comparisonTokens = [
+    TokenType.Greater,
+    TokenType.GreaterEqual,
+    TokenType.Lesser,
+    TokenType.LesserEqual,
+    TokenType.Equal,
+    TokenType.NotEqual,
+];

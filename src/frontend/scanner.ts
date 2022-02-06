@@ -62,6 +62,7 @@ export class Scanner {
 
     private scanToken() {
         const c = this.advance();
+
         switch (c) {
             case "{":
                 this.addToken(TokenType.LeftBracket);
@@ -96,6 +97,7 @@ export class Scanner {
             case " ":
             case "\r":
             case "\t":
+                this.col++;
                 break;
             case "\n":
                 this.line++;

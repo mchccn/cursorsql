@@ -1,6 +1,9 @@
 import { Scanner } from "./scanner";
 import {
+    Column,
+    Constraint,
     CreateStatement,
+    Data,
     DeleteStatement,
     Filter,
     InsertStatement,
@@ -10,7 +13,7 @@ import {
     UpdateStatement,
     UpsertStatement,
 } from "./statement";
-import { Token, TokenType } from "./token";
+import { coltypeTokens, constraintTokens, statementTokens, Token, TokenType, valueTokens } from "./token";
 
 export class Parser {
     private static readonly parseMap = new Map<TokenType, (p: Parser) => Statement>([
@@ -27,16 +30,7 @@ export class Parser {
     public parseTokens(): Statement {
         if (!this.tokens.length) throw new SyntaxError(`Statement is missing.`);
 
-        if (
-            ![
-                TokenType.Create,
-                TokenType.Insert,
-                TokenType.Select,
-                TokenType.Upsert,
-                TokenType.Update,
-                TokenType.Delete,
-            ].includes(this.tokens[0].type)
-        )
+        if (!statementTokens.includes(this.tokens[0].type))
             throw new SyntaxError(`Expected beginning of statement, instead found '${this.tokens[0].lexeme}'.`);
 
         this.validateBrackets();
@@ -55,9 +49,79 @@ export class Parser {
         throw new Error(`Assertion failed: unexpected type '${TokenType[type]}'.`);
     }
 
-    private parseCreate(): CreateStatement {}
+    private parseCreate(): CreateStatement {
+        const table = this.consume(
+            `Expected table name, instead found '${this.tokens[0].lexeme}'.`,
+            TokenType.Identifier
+        );
 
-    private parseInsert(): InsertStatement {}
+        this.consume(`Expected '{', instead found '${this.tokens[0].lexeme}'.`, TokenType.LeftBracket);
+
+        const body = [] as Token[];
+
+        let c = 0;
+
+        while (this.tokens.length && (this.tokens[0].type !== TokenType.RightBracket || c)) {
+            const t = this.tokens.shift()!;
+
+            if (t.type === TokenType.LeftBracket) c++;
+            if (t.type === TokenType.RightBracket) c--;
+
+            body.push(t);
+        }
+
+        this.consume(`Expected '}', instead found '${this.tokens[0].lexeme}'.`, TokenType.RightBracket);
+
+        const cols = [] as Column[];
+
+        while (body.length) {
+            const [col, type] = [body.shift()!, body.shift()!];
+
+            if (col.type !== TokenType.Identifier && !Scanner.keywords.get(col.lexeme))
+                throw new SyntaxError(`Expected column name, instead found '${col.lexeme}'.`);
+
+            if (!coltypeTokens.includes(type.type))
+                throw new SyntaxError(`Expected column type, instead found '${type.lexeme}'.`);
+
+            const constraints = [] as Constraint[];
+
+            while (body.length && body[0].type !== TokenType.Comma) {
+                if (!constraintTokens.includes(body[0].type))
+                    throw new SyntaxError(`Expected constraint, instead found '${body[0].lexeme}'.`);
+
+                const type = body.shift()!;
+
+                const value = [] as Token[];
+
+                while (body.length && body[+0].type !== TokenType.Comma && !constraintTokens.includes(body[0].type)) {
+                    if (!valueTokens.includes(body[0].type))
+                        throw new SyntaxError(`Expected value, instead found '${body[0].lexeme}'.`);
+
+                    value.push(body.shift()!);
+                }
+
+                constraints.push({ type, value });
+            }
+
+            if (body.length && body[0].type !== TokenType.Comma)
+                throw new SyntaxError(`Expected ',' after data, instead found '${body[0].lexeme}'.`);
+
+            body.shift();
+
+            cols.push({ col, type, constraints });
+        }
+
+        return new CreateStatement(table, cols);
+    }
+
+    private parseInsert(): InsertStatement {
+        const table = this.consume(
+            `Expected table name, instead found '${this.tokens[0].lexeme}'.`,
+            TokenType.Identifier
+        );
+
+        //TODO: IMPLEMENT
+    }
 
     private parseSelect(): SelectStatement {
         const target = this.tokens[0];
@@ -71,8 +135,15 @@ export class Parser {
                 TokenType.LeftBracket
             ).type === TokenType.LeftBracket
         ) {
-            while (this.tokens.length && this.tokens[0].type !== TokenType.RightBracket) {
-                cols.push(this.tokens.shift()!);
+            let c = 0;
+
+            while (this.tokens.length && (this.tokens[0].type !== TokenType.RightBracket || c)) {
+                const t = this.tokens.shift()!;
+
+                if (t.type === TokenType.LeftBracket) c++;
+                if (t.type === TokenType.RightBracket) c--;
+
+                cols.push(t);
 
                 if (this.tokens[+0].type !== TokenType.RightBracket)
                     this.consume(`Expected ',' or '}', instead found '${this.tokens[0].lexeme}'.`, TokenType.Comma);
@@ -96,17 +167,67 @@ export class Parser {
         );
     }
 
-    private parseUpsert(): UpsertStatement {}
-
-    private parseUpdate(): UpdateStatement {}
-
-    private parseDelete(): DeleteStatement {
-        const target = this.consume(
+    private parseUpsert(): UpsertStatement {
+        const table = this.consume(
             `Expected table name, instead found '${this.tokens[0].lexeme}'.`,
             TokenType.Identifier
         );
 
-        return new DeleteStatement(target, this.parseFilters(), this.parseModifiers());
+        //TODO: IMPLEMENT
+    }
+
+    private parseUpdate(): UpdateStatement {
+        const table = this.consume(
+            `Expected table name, instead found '${this.tokens[0].lexeme}'.`,
+            TokenType.Identifier
+        );
+
+        this.consume(`Expected '{', instead found '${this.tokens[0].lexeme}'.`, TokenType.LeftBracket);
+
+        const body = [] as Token[];
+
+        let c = 0;
+
+        while (this.tokens.length && (this.tokens[0].type !== TokenType.RightBracket || c)) {
+            const t = this.tokens.shift()!;
+
+            if (t.type === TokenType.LeftBracket) c++;
+            if (t.type === TokenType.RightBracket) c--;
+
+            body.push(t);
+        }
+
+        this.consume(`Expected '}', instead found '${this.tokens[0].lexeme}'.`, TokenType.RightBracket);
+
+        const cols = [] as Data[];
+
+        while (body.length) {
+            const [col, value] = [body.shift()!, body.shift()!];
+
+            if (col.type !== TokenType.Identifier && !Scanner.keywords.get(col.lexeme))
+                throw new SyntaxError(`Expected column name, instead found '${col.lexeme}'.`);
+
+            if (!valueTokens.includes(value.type))
+                throw new SyntaxError(`Expected value, instead found '${value.lexeme}'.`);
+
+            cols.push({ col, value });
+
+            if (body.length && body[0].type !== TokenType.Comma)
+                throw new SyntaxError(`Expected ',' after data, instead found '${body[0].lexeme}'.`);
+
+            body.shift();
+        }
+
+        return new UpdateStatement(table, cols, this.parseFilters());
+    }
+
+    private parseDelete(): DeleteStatement {
+        const table = this.consume(
+            `Expected table name, instead found '${this.tokens[0].lexeme}'.`,
+            TokenType.Identifier
+        );
+
+        return new DeleteStatement(table, this.parseFilters(), this.parseModifiers());
     }
 
     private parseFilters(): Filter[] {
