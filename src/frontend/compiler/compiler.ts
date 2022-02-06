@@ -107,6 +107,13 @@ export class Compiler {
 
         bytes.push(...compileIdentifier(stmt.table));
 
+        bytes.push( stmt.update);
+
+        bytes.push(
+            ...(stmt.filters.length ? [OpCode.OpWhere] : []),
+            ...compileListLike(stmt.filters.flatMap(compileFilter), true)
+        );
+
         bytes.push(OpCode.OpReturn);
 
         return bytes;

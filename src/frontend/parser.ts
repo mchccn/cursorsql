@@ -72,6 +72,8 @@ export class Parser {
 
         this.consume(`Expected '}', instead found '${this.tokens[0].lexeme}'.`, TokenType.RightBracket);
 
+        if (!body.length) throw new SyntaxError(`Expected at least one column.`);
+
         const cols = [] as Column[];
 
         while (body.length) {
@@ -199,6 +201,8 @@ export class Parser {
 
         this.consume(`Expected '}', instead found '${this.tokens[0].lexeme}'.`, TokenType.RightBracket);
 
+        if (!body.length) throw new SyntaxError(`Expected at least one column.`);
+
         const cols = [] as Data[];
 
         while (body.length) {
@@ -256,6 +260,8 @@ export class Parser {
         }
 
         this.consume(`Expected '}' after clause.`, TokenType.RightBracket);
+
+        if (!content.length) throw new SyntaxError(`Expected at least one filter.`);
 
         const bodies = [] as Token[][];
 
