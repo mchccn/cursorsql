@@ -10,6 +10,7 @@ import {
     UpdateStatement,
     UpsertStatement,
 } from "../statement";
+import { compileColumn } from "./column";
 import { compileData } from "./data";
 import { compileFilter } from "./filter";
 import { compileIdentifier } from "./identifier";
@@ -43,6 +44,8 @@ export class Compiler {
 
         bytes.push(...compileIdentifier(stmt.table));
 
+        bytes.push(OpCode.OpMetaClause, ...compileListLike(stmt.schema.flatMap(compileColumn)));
+
         bytes.push(OpCode.OpReturn);
 
         return bytes;
@@ -56,6 +59,11 @@ export class Compiler {
         const stmt = statement as InsertStatement;
 
         bytes.push(OpCode.OpReturn);
+
+        bytes.push(
+            OpCode.OpAggrClause,
+            ...compileListLike(stmt.data.flatMap((r) => [OpCode.OpAggrSep, ...r.flatMap(compileData)]))
+        );
 
         return bytes;
     }

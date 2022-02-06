@@ -1,4 +1,4 @@
-export enum OpCode {
+pub  enum OpCode {
     // Values
     OpStar = 0xa0,
     OpIdentifier = 0xa1,
@@ -51,3 +51,4 @@ export enum OpCode {
     // Semicolon
     OpReturn = 0xff,
 }
+

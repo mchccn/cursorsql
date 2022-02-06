@@ -1,4 +1,4 @@
-[![CQL Banner](./banner.png)](https://cursorsdottsx.github.io/cursorsql)
+[![CQL Banner](./cursorsql.png)](https://cursorsdottsx.github.io/cursorsql)
 
 <p align="center"><strong>CursorsQL is a primitive but intuitive database in Rust for beginners.</strong></p>
 

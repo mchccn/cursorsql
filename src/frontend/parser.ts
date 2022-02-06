@@ -122,7 +122,77 @@ export class Parser {
             TokenType.Identifier
         );
 
-        //TODO: IMPLEMENT
+        const data = [] as Data[][];
+
+        this.consume(`Expected '{', instead found '${this.tokens[0].lexeme}'.`, TokenType.LeftBracket);
+
+        const body = [] as Token[];
+
+        let c = 0;
+
+        while (this.tokens.length && (this.tokens[0].type !== TokenType.RightBracket || c)) {
+            const t = this.tokens.shift()!;
+
+            if (t.type === TokenType.LeftBracket) c++;
+            if (t.type === TokenType.RightBracket) c--;
+
+            body.push(t);
+        }
+
+        this.consume(`Expected '}', instead found '${this.tokens[0].lexeme}'.`, TokenType.RightBracket);
+
+        if (!body.length) throw new SyntaxError(`Expected at least one row.`);
+
+        while (body.length) {
+            const row = [] as Token[];
+
+            if (body[0].type !== TokenType.LeftBracket)
+                throw new SyntaxError(`Expected '{', instead found '${body[0].lexeme}'.`);
+
+            body.shift();
+
+            while (body.length && (body[+0].type !== TokenType.RightBracket || c)) {
+                const t = body.shift()!;
+
+                if (t.type === TokenType.LeftBracket) c++;
+                if (t.type === TokenType.RightBracket) c--;
+
+                row.push(t);
+            }
+
+            if (body.length && body[+0].type !== TokenType.RightBracket)
+                throw new SyntaxError(`Expected '}', instead found '${body[0].lexeme}'.`);
+
+            body.shift();
+
+            if (!row.length) throw new SyntaxError(`Expected at least one column.`);
+
+            if (body.length && body[+0].type !== TokenType.Comma)
+                throw new SyntaxError(`Expected ',' after data, instead found '${body[0].lexeme}'.`);
+
+            body.shift();
+
+            data.push([]);
+
+            while (row.length) {
+                const [col, value] = [row.shift()!, row.shift()!];
+
+                if (col.type !== TokenType.Identifier && !Scanner.keywords.get(col.lexeme))
+                    throw new SyntaxError(`Expected column name, instead found '${col.lexeme}'.`);
+
+                if (!valueTokens.includes(value.type))
+                    throw new SyntaxError(`Expected value, instead found '${value.lexeme}'.`);
+
+                if (row.length && row[0].type !== TokenType.Comma)
+                    throw new SyntaxError(`Expected ',' after data, instead found '${row[0].lexeme}'.`);
+
+                row.shift();
+
+                data[data.length - 1].push({ col, value });
+            }
+        }
+
+        return new InsertStatement(table, data);
     }
 
     private parseSelect(): SelectStatement {
@@ -174,8 +244,6 @@ export class Parser {
             `Expected table name, instead found '${this.tokens[0].lexeme}'.`,
             TokenType.Identifier
         );
-
-        //TODO: IMPLEMENT
 
         const body = [] as Token[];
 
