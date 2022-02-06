@@ -10,6 +10,7 @@ import {
     UpdateStatement,
     UpsertStatement,
 } from "../statement";
+import { compileData } from "./data";
 import { compileFilter } from "./filter";
 import { compileIdentifier } from "./identifier";
 import { compileListLike } from "./listlike";
@@ -107,7 +108,7 @@ export class Compiler {
 
         bytes.push(...compileIdentifier(stmt.table));
 
-        bytes.push( stmt.update);
+        bytes.push(OpCode.OpDataClause, ...compileListLike(stmt.update.flatMap(compileData)));
 
         bytes.push(
             ...(stmt.filters.length ? [OpCode.OpWhere] : []),
