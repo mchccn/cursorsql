@@ -1,6 +1,7 @@
 mod common;
 
 use std::net::{TcpListener, TcpStream};
+use std::io::{Write};
 use dotenv::dotenv;
 
 fn main() {
@@ -12,7 +13,9 @@ fn main() {
 
     for stream in  listener.incoming() {
         match stream {
-            Ok(stream) => {
+            Ok(mut stream) => {
+                stream.write(b"hello wordle").expect("Failed to write to stream");
+
                 println!("New connection: {}", stream.peer_addr().unwrap());
             }
             Err(e) => {
