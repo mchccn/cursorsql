@@ -8,14 +8,14 @@ export function compileSize(size: number) {
     while (size > 255) {
         const byte = size & 0xff;
 
-        bytes.unshift(byte);
+        bytes.push(byte);
 
-        size = (size - byte) / 256;
+        size = (size - byte) / 0xff;
     }
 
-    bytes.unshift(size | 0);
+    bytes.push(size | 0);
 
-    while (bytes.length < 4) bytes.unshift(0);
+    while (bytes.length < 4) bytes.push(0);
 
     bytes.unshift(OpCode.OpUInt32);
 
