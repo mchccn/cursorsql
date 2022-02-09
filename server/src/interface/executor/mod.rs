@@ -24,7 +24,7 @@ impl<I> Executor<I>
 where
     I: Iterator<Item = u8>,
 {
-    fn new(bytes: I) -> Self {
+    pub fn new(bytes: I) -> Self {
         Executor { bytes, index: 0 }
     }
 
@@ -51,7 +51,7 @@ where
         }
 
         match self.bytes.next() {
-            Some(b) if byte_to_opcode(b).is_some() => (),
+            Some(b) if byte_to_opcode(b).unwrap_or(OpNull) == OpReturn => (),
             _ => return Err(()),
         };
 

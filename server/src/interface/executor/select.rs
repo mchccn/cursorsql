@@ -3,6 +3,7 @@ use std::iter::Iterator;
 
 use super::Executor;
 
+#[derive(Debug)]
 pub enum SelectTarget {
     All,
     Few(Vec<String>),
@@ -13,8 +14,6 @@ where
     I: Iterator<Item = u8>,
 {
     pub(super) fn exec_select(&mut self) -> Result<(), ()> {
-        // refactor identifier reading into function
-
         let table = self.read_identifier()?;
 
         let target = self.expect_opcodes(&[OpStar, OpListClause])?;
@@ -22,6 +21,8 @@ where
         let target = match target {
             OpStar => SelectTarget::All,
             OpListClause => {
+                // need to test this part
+
                 let clauselen = self.read_uint32()?;
 
                 let i = self.index;
@@ -39,8 +40,6 @@ where
                 target
             ),
         };
-
-        // read identifier
 
         Ok(())
     }

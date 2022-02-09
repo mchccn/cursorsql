@@ -1,5 +1,5 @@
 #[allow(dead_code)]
-#[derive(Debug, Eq, PartialEq, Clone)]
+#[derive(Debug, Clone, Eq, PartialEq)]
 pub enum OpCode {
     // Values
     OpStar = 0xa0,
