@@ -1,0 +1,9 @@
+{
+    "name": "cli",
+    "version": "1.0.0",
+    "description": "utility package.json for defining aliases to common tasks",
+    "license": "GPL-3.0",
+    "scripts": {
+        "fmt": "cargo watch --exec \"fmt --all\""
+    }
+}

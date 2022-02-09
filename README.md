@@ -165,16 +165,12 @@ select =
 ';' ;
 ```
 
-#### upsert
+#### update
 
 ```ebnf
-upsert =
-'upsert'
+update =
+'update'
     table
-'{'
-    ( col ( string | number | boolean ) ',' )*
-    ( col ( string | number | boolean ) ( ',' )? )
-'}'
 '{'
     ( col ( string | number | boolean ) ',' )*
     ( col ( string | number | boolean ) ( ',' )? )
@@ -186,12 +182,16 @@ upsert =
 ';' ;
 ```
 
-#### update
+#### upsert
 
 ```ebnf
-update =
-'update'
+upsert =
+'upsert'
     table
+'{'
+    ( col ( string | number | boolean ) ',' )*
+    ( col ( string | number | boolean ) ( ',' )? )
+'}'
 '{'
     ( col ( string | number | boolean ) ',' )*
     ( col ( string | number | boolean ) ( ',' )? )
