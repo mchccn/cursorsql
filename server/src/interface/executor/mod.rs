@@ -6,6 +6,7 @@ mod read;
 mod select;
 mod update;
 mod upsert;
+mod util;
 
 use crate::common::opcode::OpCode::*;
 use crate::common::opcode_util::byte_to_opcode;
@@ -33,6 +34,8 @@ where
             None => return Err(()),
         };
 
+        self.index += 1;
+
         let result = match byte_to_opcode(stmt_type) {
             Some(OpCreate) => self.exec_create(),
             Some(OpInsert) => self.exec_insert(),
@@ -52,10 +55,14 @@ where
             _ => return Err(()),
         };
 
+        self.index += 1;
+
         match self.bytes.next() {
             None => (),
             _ => return Err(()),
         }
+
+        self.index += 1;
 
         Ok(())
     }

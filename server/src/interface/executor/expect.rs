@@ -15,6 +15,8 @@ where
             return Err(());
         }
 
+        self.index += 1;
+
         match byte_to_opcode(b.unwrap()) {
             Some(c) if c == o => Ok(c),
             _ => Err(()),
@@ -28,6 +30,8 @@ where
             return Err(());
         }
 
+        self.index += 1;
+
         match byte_to_opcode(b.unwrap()) {
             Some(c) if o.iter().any(|x| *x == c) => Ok(c),
             _ => Err(()),
@@ -38,6 +42,8 @@ where
         let b = self.bytes.next();
 
         if b.is_some() {
+            self.index += 1;
+
             match byte_to_opcode(b.unwrap()) {
                 Some(c) if c == o => Ok(Some(c)),
                 _ => Err(()),
@@ -51,6 +57,8 @@ where
         let b = self.bytes.next();
 
         if b.is_some() {
+            self.index += 1;
+
             match byte_to_opcode(b.unwrap()) {
                 Some(c) if o.iter().any(|x| *x == c) => Ok(Some(c)),
                 _ => Err(()),
@@ -62,6 +70,8 @@ where
 
     pub(super) fn expect_byte(&mut self) -> Result<u8, ()> {
         let b = self.bytes.next();
+
+        self.index += 1;
 
         match b {
             Some(b) => Ok(b),

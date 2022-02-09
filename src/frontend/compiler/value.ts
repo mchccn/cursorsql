@@ -1,6 +1,7 @@
 import { TextEncoder } from "util";
 import { OpCode } from "../opcode";
 import { Token, TokenType } from "../token";
+import { compileListLike } from "./listlike";
 
 export function compileValue(t: Token) {
     if (![TokenType.Number, TokenType.Boolean, TokenType.String].includes(t.type))
@@ -22,7 +23,8 @@ export function compileValue(t: Token) {
 
     if (t.type === TokenType.Boolean) return [OpCode.OpBoolean, t.literal === "true" ? 1 : 0];
 
-    if (t.type === TokenType.String) return [OpCode.OpString, ...new TextEncoder().encode(t.literal as string)];
+    if (t.type === TokenType.String)
+        return [OpCode.OpString, ...compileListLike([...new TextEncoder().encode(t.literal as string)])];
 
     throw void 0;
 }
