@@ -13,15 +13,24 @@ import {
     UpdateStatement,
     UpsertStatement,
 } from "./statement";
-import { coltypeTokens, constraintTokens, statementTokens, Token, TokenType, valueTokens } from "./token";
+import {
+    coltypeTokens,
+    comparisonTokens,
+    constraintTokens,
+    modifierTokens,
+    statementTokens,
+    Token,
+    TokenType,
+    valueTokens,
+} from "./token";
 
 export class Parser {
     private static readonly parseMap = new Map<TokenType, (p: Parser) => Statement>([
         [TokenType.Create, (p) => p.parseCreate()],
         [TokenType.Insert, (p) => p.parseInsert()],
         [TokenType.Select, (p) => p.parseSelect()],
-        [TokenType.Upsert, (p) => p.parseUpsert()],
         [TokenType.Update, (p) => p.parseUpdate()],
+        [TokenType.Upsert, (p) => p.parseUpsert()],
         [TokenType.Delete, (p) => p.parseDelete()],
     ]);
 
@@ -427,20 +436,10 @@ export class Parser {
             if (col.type !== TokenType.Identifier && !Scanner.keywords.get(col.lexeme))
                 throw new SyntaxError(`Left side must be an identifier.`);
 
-            if (
-                ![
-                    TokenType.Greater,
-                    TokenType.GreaterEqual,
-                    TokenType.Lesser,
-                    TokenType.LesserEqual,
-                    TokenType.Equal,
-                    TokenType.NotEqual,
-                ].includes(type.type)
-            )
+            if (!comparisonTokens.includes(type.type))
                 throw new SyntaxError(`Unrecognized comparator '${type.lexeme}'.`);
 
-            if (![TokenType.Number, TokenType.Boolean, TokenType.String].includes(value.type))
-                throw new SyntaxError(`Right side must be a value.`);
+            if (!valueTokens.includes(value.type)) throw new SyntaxError(`Right side must be a value.`);
 
             return { col, type, value };
         });
@@ -451,7 +450,7 @@ export class Parser {
 
         const modifiers = [];
 
-        while (this.tokens.length && [TokenType.Sort, TokenType.Order, TokenType.Limit].includes(this.tokens[0].type)) {
+        while (this.tokens.length && modifierTokens.includes(this.tokens[0].type)) {
             const type = this.tokens.shift()!;
 
             const value = [this.consume(`Expected number after '${type.lexeme}'.`, TokenType.Number)];

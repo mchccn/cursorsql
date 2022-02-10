@@ -1,11 +1,12 @@
 import { TextEncoder } from "util";
 import { OpCode } from "../opcode";
-import { Token, TokenType } from "../token";
+import { Token, TokenType, valueTokens } from "../token";
 import { compileListLike } from "./listlike";
 
 export function compileValue(t: Token) {
-    if (![TokenType.Number, TokenType.Boolean, TokenType.String].includes(t.type))
-        throw new TypeError(`Token is not a value.`);
+    if (!valueTokens.includes(t.type)) throw new TypeError(`Token is not a value.`);
+
+    if (t.type === TokenType.Null) return [OpCode.OpNull];
 
     if (t.type === TokenType.Number) {
         const dv = new DataView(new ArrayBuffer(64 / 8));

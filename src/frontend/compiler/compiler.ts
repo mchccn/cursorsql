@@ -22,8 +22,8 @@ export class Compiler {
         ["create", Compiler.compileCreate],
         ["insert", Compiler.compileInsert],
         ["select", Compiler.compileSelect],
-        ["upsert", Compiler.compileUpsert],
         ["update", Compiler.compileUpdate],
+        ["upsert", Compiler.compileUpsert],
         ["delete", Compiler.compileDelete],
     ]);
 

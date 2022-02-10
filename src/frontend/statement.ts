@@ -60,6 +60,18 @@ export class SelectStatement extends Statement {
     }
 }
 
+export class UpdateStatement extends Statement {
+    public readonly type = "update";
+
+    public constructor(
+        public readonly table: Token,
+        public readonly update: Data[],
+        public readonly filters: Filter[]
+    ) {
+        super();
+    }
+}
+
 export class UpsertStatement extends Statement {
     public readonly type = "upsert";
 
@@ -67,18 +79,6 @@ export class UpsertStatement extends Statement {
         public readonly table: Token,
         public readonly update: Data[],
         public readonly insert: Data[],
-        public readonly filters: Filter[]
-    ) {
-        super();
-    }
-}
-
-export class UpdateStatement extends Statement {
-    public readonly type = "update";
-
-    public constructor(
-        public readonly table: Token,
-        public readonly update: Data[],
         public readonly filters: Filter[]
     ) {
         super();

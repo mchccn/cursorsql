@@ -55,8 +55,8 @@ export enum TokenType {
     Create,
     Insert,
     Select,
-    Upsert,
     Update,
+    Upsert,
     Delete,
 
     From,
@@ -107,14 +107,16 @@ export const coltypeTokens = [
 
 export const constraintTokens = [TokenType.Max, TokenType.Min, TokenType.Unique];
 
+export const modifierTokens = [TokenType.Sort, TokenType.Order, TokenType.Limit];
+
 export const valueTokens = [TokenType.Number, TokenType.Boolean, TokenType.String, TokenType.Null];
 
 export const statementTokens = [
     TokenType.Create,
     TokenType.Insert,
     TokenType.Select,
-    TokenType.Upsert,
     TokenType.Update,
+    TokenType.Upsert,
     TokenType.Delete,
 ];
 
