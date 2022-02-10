@@ -10,13 +10,13 @@ mod util;
 
 use crate::common::opcode::OpCode::*;
 use crate::common::opcode_util::byte_to_opcode;
-use std::iter::Iterator;
+use std::iter::{Iterator, Peekable};
 
 pub struct Executor<I>
 where
     I: Iterator<Item = u8>,
 {
-    pub(super) bytes: I,
+    pub(super) bytes: Peekable<I>,
     pub(super) index: usize,
 }
 
@@ -25,7 +25,10 @@ where
     I: Iterator<Item = u8>,
 {
     pub fn new(bytes: I) -> Self {
-        Executor { bytes, index: 0 }
+        Executor {
+            bytes: bytes.peekable(),
+            index: 0,
+        }
     }
 
     pub fn exec(&mut self) -> Result<(), ()> {

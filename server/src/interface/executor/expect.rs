@@ -78,4 +78,65 @@ where
             _ => Err(()),
         }
     }
+
+    pub(super) fn peek_opcode(&mut self, o: OpCode) -> Result<OpCode, ()> {
+        let b = self.bytes.peek();
+
+        if b.is_none() {
+            return Err(());
+        }
+
+        match byte_to_opcode(*b.unwrap()) {
+            Some(c) if c == o => Ok(c),
+            _ => Err(()),
+        }
+    }
+
+    pub(super) fn peek_opcodes(&mut self, o: &[OpCode]) -> Result<OpCode, ()> {
+        let b = self.bytes.peek();
+
+        if b.is_none() {
+            return Err(());
+        }
+
+        match byte_to_opcode(*b.unwrap()) {
+            Some(c) if o.iter().any(|x| *x == c) => Ok(c),
+            _ => Err(()),
+        }
+    }
+
+    pub(super) fn peek_opcode_opt(&mut self, o: OpCode) -> Result<Option<OpCode>, ()> {
+        let b = self.bytes.peek();
+
+        if b.is_some() {
+            match byte_to_opcode(*b.unwrap()) {
+                Some(c) if c == o => Ok(Some(c)),
+                _ => Err(()),
+            }
+        } else {
+            Ok(None)
+        }
+    }
+
+    pub(super) fn peek_opcodes_opt(&mut self, o: &[OpCode]) -> Result<Option<OpCode>, ()> {
+        let b = self.bytes.peek();
+
+        if b.is_some() {
+            match byte_to_opcode(*b.unwrap()) {
+                Some(c) if o.iter().any(|x| *x == c) => Ok(Some(c)),
+                _ => Err(()),
+            }
+        } else {
+            Ok(None)
+        }
+    }
+
+    pub(super) fn peek_byte(&mut self) -> Result<u8, ()> {
+        let b = self.bytes.peek();
+
+        match b {
+            Some(b) => Ok(*b),
+            _ => Err(()),
+        }
+    }
 }

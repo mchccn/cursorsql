@@ -9,4 +9,5 @@ import { debug } from "../debug/frontend";
 // debug.compile("upsert table { id 0 } { id 1 };");
 // debug.parse("insert table { { id 0 }, { id 1 } };");
 // debug.compile("create table { id u8 max 0 unique, name str };");
-debug.xxd("select { col1, col2 } from table;");
+debug.xxd("select { col1, col2 } from table where { id = 1 };");
+debug.compile("select { col1, col2 } from table where { id = 1 };");
